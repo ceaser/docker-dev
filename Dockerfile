@@ -64,13 +64,9 @@ RUN set -e \
   && echo 'root:roottoor' | chpasswd \
   && sed -i -e 's/^UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
 
-# RUN pacman -Syu --noconfirm
-# RUN pacman -S --noconfirm --needed vim git openssh base-devel go kubectl
 RUN (useradd -m clarry || :) \
   && usermod -G wheel clarry \
   && mkdir -p /home/clarry/.ssh \
-  # && su -c 'git config --global user.email clarry@gitops.local' clarry \
-  # && su -c 'git config --global user.name clarry' clarry \
   && su -c 'git clone https://aur.archlinux.org/yay-bin.git /home/clarry/yay-bin' clarry \
   && su -c 'cd /home/clarry/yay-bin && makepkg' clarry \
   && echo 'clarry ALL=(ALL:ALL) ALL' >> /etc/sudoers.d/clarry \
@@ -83,11 +79,6 @@ RUN (useradd -m clarry || :) \
   && su -c 'rm -rf /home/clarry/yay-bin' clarry \
   && chown -R clarry /home/clarry \
   && chgrp -R clarry /home/clarry
-
-# RUN su -c "yay -S --noconfirm --noprogressbar --needed the_silver_searcher entr python-pynvim ruby-neovim nodejs-neovim" clarry
-
-# ADD docker-entrypoint.sh /
-# ENTRYPOINT ["/docker-entrypoint.sh"]
 
 ENV YADM_COMPATIBILITY=1
 EXPOSE 22/tcp
