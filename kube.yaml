@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev
+  labels:
+    app: dev
+spec:
+  ports:
+  - port: 22
+    name: ssh
+  clusterIP: None
+  selector:
+    app: dev
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: dev
+spec:
+  selector:
+    matchLabels:
+      app: dev
+  serviceName: "dev"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      terminationGracePeriodSeconds: 300
+      containers:
+      - name: dev
+        image: registry.home.divergentlogic.com/dev:latest
+        ports:
+        - containerPort: 20
+          name: ssh
+        volumeMounts:
+        - name: home
+          mountPath: /home/clarry/
+  volumeClaimTemplates:
+  - metadata:
+      name: dev
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "my-storage-class"
+      resources:
+        requests:
+          storage: 1Gi
