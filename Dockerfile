@@ -31,6 +31,7 @@ RUN pacman -Syu --noconfirm --noprogressbar \
             keychain \
             kubectl \
             libcap \
+            libguestfs \
             linux-firmware \
             lvm2 \
             man \
