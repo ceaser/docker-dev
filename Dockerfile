@@ -1,12 +1,11 @@
 FROM archlinux:latest
-MAINTAINER Ceaser Larry
 
 ARG DEV_UID
-ENV DEV_UID ${DEV_UID:-1000}
+ENV DEV_UID=${DEV_UID:-1000}
 ARG DEV_GID
-ENV DEV_GID ${DEV_GID:-1000}
+ENV DEV_GID=${DEV_GID:-1000}
 ARG CHANGE_HOME_DIR_OWNERSHIP
-ENV CHANGE_HOME_DIR_OWNERSHIP ${CHANGE_HOME_DIR_OWNERSHIP:-false}
+ENV CHANGE_HOME_DIR_OWNERSHIP=${CHANGE_HOME_DIR_OWNERSHIP:-false}
 
 RUN pacman -Syu --noconfirm --noprogressbar \
   && pacman -S --noconfirm --noprogressbar --needed  \
