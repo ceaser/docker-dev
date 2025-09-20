@@ -62,13 +62,14 @@ if [ "$1" = "/usr/sbin/sshd" ]; then
     chown -R clarry:clarry $HOME_DIR
   fi
 
-
-  if [ "$(cat /etc/shadow | grep clarry | wc -c)" -lt 30 ]; then
-    P=`head -c 31 /dev/urandom | base64`
-    echo "User password set to: $P"
-    echo "clarry:$P" | chpasswd
-    unset P
+  if [ ! -f "/etc/machine-id" ]; then
+    dbus-uuidgen --ensure=/etc/machine-id
   fi
+
+  P=`head -c 31 /dev/urandom | base64`
+  echo "User password set to: $P"
+  echo "clarry:$P" | chpasswd
+  unset P
 fi
 
 # Execute the command.

@@ -16,6 +16,9 @@ run:
 sh:
 	docker run -it $(ARGS) --entrypoint bash --rm --name "$(DOCKER_APPNAME)" "$(DOCKER_REPO)/$(DOCKER_APPNAME):latest"
 
+login:
+	docker exec -it "$(DOCKER_APPNAME)" bash
+
 clean:
 	-docker stop ${DOCKER_APPNAME}
 	-docker rm -v ${DOCKER_APPNAME}
@@ -30,5 +33,5 @@ pull:
 	docker pull "$(DOCKER_REPO)/$(DOCKER_APPNAME):latest
 
 ip:
-	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dev
+	@docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dev | tr -d '\n'
 
