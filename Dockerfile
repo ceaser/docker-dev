@@ -9,7 +9,6 @@ ENV CHANGE_HOME_DIR_OWNERSHIP=${CHANGE_HOME_DIR_OWNERSHIP:-false}
 
 RUN pacman -Syu --noconfirm --noprogressbar \
   && pacman -S --noconfirm --noprogressbar --needed  \
-            ack \
             alacritty \
             aws-cli \
             base  \
