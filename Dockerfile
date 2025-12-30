@@ -79,6 +79,9 @@ RUN (useradd -m clarry || :) \
   && chown -R clarry /home/clarry \
   && chgrp -R clarry /home/clarry
 
+RUN sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+  && locale-gen
+
 ENV YADM_COMPATIBILITY=1
 EXPOSE 22/tcp
 EXPOSE 60000:61000/udp
